@@ -21,8 +21,11 @@ public class ParticipantService {
 	public Collection<Participant> getAll() {
 		return connector.getSession().createCriteria(Participant.class).list();
 	}
-	public Collection<Participant> getAll(String sortBy, String sortOrder) {
+	public Collection<Participant> getAll(String sortBy, String sortOrder, String key) {
 		String hql = "FROM Participant p ";
+		if(!key.isBlank()) {
+			hql += "WHERE p.login LIKE '%"+key+"%' ";
+		}
 		if(sortBy.equals("login")) {
 			if (sortOrder.equals("DESC")) {
 				hql += "ORDER BY p.login DESC ";
