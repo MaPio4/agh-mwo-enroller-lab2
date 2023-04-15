@@ -24,15 +24,14 @@ public class ParticipantService {
 	public Collection<Participant> getAll(String sortBy, String sortOrder) {
 		String hql = "FROM Participant p ";
 		if(sortBy.equals("login")) {
-			if(sortOrder.equals("DESC")) {
+			if (sortOrder.equals("DESC")) {
 				hql += "ORDER BY p.login DESC ";
 			}
-			else if (sortOrder.equals("ASC")) {
+			else {
 				hql += "ORDER BY p.login ASC ";
 			}
 		}
 		return connector.getSession().createQuery(hql).list();
-
 	}
 
 	public Participant findByLogin(String login) {
