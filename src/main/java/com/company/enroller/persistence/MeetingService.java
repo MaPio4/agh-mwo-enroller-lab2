@@ -63,6 +63,13 @@ public class MeetingService {
 		transaction.commit();
 	}
 
+	public void copyAndUpdate(Meeting meetingFrom, Meeting meetingTo) {
+		meetingTo.setDate(meetingFrom.getDate());
+		meetingTo.setDescription(meetingFrom.getDescription());
+		meetingTo.setTitle(meetingFrom.getTitle());
+		this.update(meetingTo);
+	}
+
 	public boolean alreadyExist(Meeting meeting) {
 		String hql = "FROM Meeting WHERE title=:title AND date=:date";
 		Query query = this.session.createQuery(hql);
