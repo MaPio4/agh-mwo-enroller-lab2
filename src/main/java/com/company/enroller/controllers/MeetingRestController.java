@@ -31,4 +31,30 @@ public class MeetingRestController {
 		}
 		return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
 	}
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public ResponseEntity<?> addMeeting(@RequestBody Meeting meeting) {
+		meetingService.add(meeting);
+		return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Meeting updatedMeeting) {
+		Meeting meeting = meetingService.findById(id);
+		if (meeting == null) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		meetingService.copyAndUpdate(updatedMeeting, meeting);
+		return new ResponseEntity<Participant>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> delete(@PathVariable("id") long id) {
+		Meeting meeting = meetingService.findById(id);
+		if (meeting == null) {
+			return new ResponseEntity(HttpStatus.NOT_FOUND);
+		}
+		meetingService.delete(meeting);
+		return new ResponseEntity<Participant>(HttpStatus.OK);
+	}
+
 }
